@@ -16,11 +16,19 @@ def load_config_file(config_path: str) -> Dict[str, Any]:
     """Handle the errors if attempts fail with useful output message. - Error Handling"""
 
 
-def logging(config: Dict[str, Any]) -> None:
-    """Enable logging configuration"""
+def setup_logging(config: Dict[str, Any]) -> None:
+    """Enable logging configuration. Do not use logging as Python module being used"""
     log_config = config.get("logging", {})
+    log_level =  log_config.get("level", "INFO").upper()
+
+    valid_levels = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+
+    if log_level not in valid_levels:
+        log_level = "INFO" 
+    """Fallback if none of the above is valid. Thereby using INFO as fault"""
+
     logging.basicConfig(
-        level=getattr(logging, log_config.get("level", "INFO")),
-        format=log_config.get("format", "%(message)s"),
+        level=getattr(logging, log_level,
+        format=log_config.get("format", "%(asctime)/s -%(levelname)s - %(message)s"),
         filename=log_config.get("file")
     )
