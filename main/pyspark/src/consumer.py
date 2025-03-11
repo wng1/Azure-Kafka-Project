@@ -13,4 +13,14 @@ def load_config_file(config_path: str) -> Dict[str, Any]:
     """Use yaml.safe_load instead of yaml.load to prevent security risk such as arbitrary code from executing in the YAML file"""
     except Exception as e:
       raise RuntimeError(f"Failed to load the configuration specified: {str(e)}")
-    """Handle the errors if attempts fail with useful output message. - Error Handling"
+    """Handle the errors if attempts fail with useful output message. - Error Handling"""
+
+
+def logging(config: Dict[str, Any]) -> None:
+    """Enable logging configuration"""
+    log_config = config.get("logging", {})
+    logging.basicConfig(
+        level=getattr(logging, log_config.get("level", "INFO")),
+        format=log_config.get("format", "%(message)s"),
+        filename=log_config.get("file")
+    )
