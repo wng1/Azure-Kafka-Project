@@ -6,10 +6,6 @@ from pyspark.sql.functions import col, from_json, avg, count, expr
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType
 from typing import Dict, Any
 
-
-
-
-
 def load_config_file(config_path: str) -> Dict[str, Any]:
     """Execute and load the configuration in the YAML file for the application. Eliminate the unnecessary need for hardcoding settings in the code and flexibility for modification and maintenance to the configuration."""
     try:
@@ -19,7 +15,6 @@ def load_config_file(config_path: str) -> Dict[str, Any]:
     except Exception as e:
       raise RuntimeError(f"Failed to load the configuration specified: {str(e)}")
     """Handle the errors if attempts fail with useful output message. - Error Handling"""
-
 
 def setup_logging(config: Dict[str, Any]) -> None:
     """Enable logging configuration. Do not use logging as Python module being used"""
